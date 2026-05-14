@@ -7,11 +7,9 @@ const app = express();
 
 app.use(cors({
   origin: [
-    "http://localhost:5173",
-    "http://localhost:3001",
-    "http://127.0.0.1:5173",
+    "https://fiyya-fe-dot-e-40-489101.et.r.appspot.com",
   ],
-  methods: ["GET", "POST", "PUT", "DELETE"],
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   credentials: true,
 }));
 
