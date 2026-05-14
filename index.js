@@ -24,13 +24,17 @@ app.get("/api", (req, res) => {
 require("./schema/Catatan");
 app.use("/api/v1/catatan", catatanRoutes);
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5000;
 
-sequelize.sync().then(() => {
-  console.log("Database tersinkron");
-  app.listen(PORT, () => {
-    console.log(`Backend berjalan di http://localhost:${PORT}`);
+sequelize.sync()
+  .then(() => {
+    console.log("Database tersinkron");
+
+    app.listen(PORT, "0.0.0.0", () => {
+      console.log(`Backend berjalan di port ${PORT}`);
+    });
+  })
+  .catch((err) => {
+    console.error("Gagal tersambung ke database:", err.message);
+    process.exit(1);
   });
-}).catch((err) => {
-  console.error("Gagal tersambung ke database:", err.message);
-});
