@@ -1,38 +1,51 @@
-const BASE_URL = import.meta.env.VITE_API_URL || '/api/v1/catatan';
+const API_BASE_URL =
+  import.meta.env.VITE_API_URL || "https://be-rest-194342266835.us-central1.run.app";
+
+const BASE_URL = `${API_BASE_URL}/api/v1/catatan`;
 
 export const api = {
   async getAll() {
     const res = await fetch(BASE_URL);
-    if (!res.ok) throw new Error('Gagal memuat catatan');
-    return res.json();
+    const json = await res.json();
+
+    if (!res.ok) throw new Error(json.message || "Gagal memuat catatan");
+    return json;
   },
 
   async create(data) {
     const res = await fetch(BASE_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
     });
+
     const json = await res.json();
-    if (!res.ok) throw new Error(json.message || 'Gagal membuat catatan');
+
+    if (!res.ok) throw new Error(json.message || "Gagal membuat catatan");
     return json;
   },
 
   async update(id, data) {
     const res = await fetch(`${BASE_URL}/${id}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
     });
+
     const json = await res.json();
-    if (!res.ok) throw new Error(json.message || 'Gagal memperbarui catatan');
+
+    if (!res.ok) throw new Error(json.message || "Gagal memperbarui catatan");
     return json;
   },
 
   async delete(id) {
-    const res = await fetch(`${BASE_URL}/${id}`, { method: 'DELETE' });
+    const res = await fetch(`${BASE_URL}/${id}`, {
+      method: "DELETE",
+    });
+
     const json = await res.json();
-    if (!res.ok) throw new Error(json.message || 'Gagal menghapus catatan');
+
+    if (!res.ok) throw new Error(json.message || "Gagal menghapus catatan");
     return json;
   },
 };
