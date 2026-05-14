@@ -26,15 +26,16 @@ app.use("/api/v1/catatan", catatanRoutes);
 
 const PORT = process.env.PORT || 5000;
 
-sequelize.sync()
-  .then(() => {
-    console.log("Database tersinkron");
+app.listen(PORT, "0.0.0.0", async () => {
+  console.log(`Backend berjalan di port ${PORT}`);
 
-    app.listen(PORT, "0.0.0.0", () => {
-      console.log(`Backend berjalan di port ${PORT}`);
-    });
-  })
-  .catch((err) => {
+  try {
+    await sequelize.authenticate();
+    console.log("Database berhasil terkoneksi");
+
+    await sequelize.sync();
+    console.log("Database tersinkron");
+  } catch (err) {
     console.error("Gagal tersambung ke database:", err.message);
-    process.exit(1);
-  });
+  }
+});
