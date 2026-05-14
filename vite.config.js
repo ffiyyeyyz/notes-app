@@ -7,7 +7,7 @@ export default defineConfig({
     port: 5173,
     proxy: {
       '/api': {
-        target: 'https://be-rest-194342266835.us-central1.run.app:5000',
+        target: 'https://be-rest-194342266835.us-central1.run.app/',
         changeOrigin: true,
       }
     }
